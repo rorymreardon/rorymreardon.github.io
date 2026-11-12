@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blinkit | Rory Reardon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <div class="links">
+    <a href="index.html#projects">All projects</a>
+    <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
+  </div>
+</nav>
+<header class="phead">
+  <p class="kicker">// fpga · esp32 · digital pet</p>
+  <h1>Blinkit</h1>
+  <p class="lead">A tiny digital pet with moods, sounds, and random genes. I'm building him twice: first in pure hardware logic on an FPGA for my class final project, then as a portable ESP32 keychain with a touch screen and Bluetooth friends.</p>
+</header>
+
+<img class="heroimg" src="assets/blinkit-setup.jpg" alt="Blinkit's face on a VGA monitor, driven by the Nexys A7 board on the desk">
+
+<div class="facts">
+  <div><span class="k">PLATFORMS</span><span>Nexys A7-100T, ESP32-S3</span></div>
+  <div><span class="k">LANGUAGES</span><span>Verilog, C++</span></div>
+  <div><span class="k">TOOLS</span><span>Vivado, Arduino, browser simulators I built</span></div>
+  <div><span class="k">STATUS</span><span>FPGA v20 working, ESP32 version on a breadboard</span></div>
+</div>
+
+<section>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px">
+    <p class="kicker">PART 1 · class final project · demo December 2026</p>
+    <h2>The FPGA version</h2>
+    <p class="lead">Built entirely in Verilog on a Digilent Nexys A7-100T (Artix-7) in Vivado. There's no processor: every blink, mood, and sound is hardware logic. Version 20 is running on the board.</p>
+  </div>
+  <div class="boxes">
+    <div class="box"><h3>Live VGA face</h3><p>A 640x480 renderer draws his face every frame. The tilted oval eyes come from a pipelined ellipse test, with blinking, wandering gaze, sparkles, heart and star eyes, and tears.</p></div>
+    <div class="box"><h3>16-mood state machine</h3><p>Happy, petted, sleepy, anxious, cold, dizzy, angry, sad, and more, each with real triggers. Make him angry 3 times in 20 seconds and he turns sad.</p></div>
+    <div class="box"><h3>Random genes</h3><p>He hatches from an egg with genes seeded by microphone noise: 8 colors, 4 pupil shapes, eye shape, and white eyeballs. His DNA shows on the board's LEDs.</p></div>
+    <div class="box"><h3>Sensors over SPI and I2C</h3><p>An ADXL362 accelerometer over SPI makes him dizzy when shaken and anxious when flipped, and his eyes follow the tilt. An ADT7420 over I2C makes him cold when the room cools.</p></div>
+    <div class="box"><h3>Sound engine</h3><p>16 sounds played over PWM. I designed them in Voice Lab, a browser tool I built that exports Verilog directly.</p></div>
+    <div class="box"><h3>7-segment mood text</h3><p>The 8-digit display spells out his current mood, with a debug mode for testing.</p></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:40px;padding:28px;margin-top:20px;background:var(--panel);border:1px solid rgba(74,222,128,.5);border-radius:8px">
+    <video src="assets/blinkit-fpga-demo.mp4" poster="assets/blinkit-fpga-demo-poster.jpg" controls muted playsinline preload="metadata" style="flex:0 1 320px;width:320px;max-width:100%;aspect-ratio:9/16;object-fit:cover"></video>
+    <div style="flex:999 1 320px;display:flex;flex-direction:column;gap:12px">
+      <p class="kicker">&gt; fpga_demo.mp4 // 40 s</p>
+      <h3 style="font-size:22px">See him react</h3>
+      <p>Pressing the board's buttons changes his mood live on the monitor: wandering idle eyes, happy eyes, and an angry glare when you poke him too much. Every frame is drawn by the FPGA in real time, with no processor and no stored images.</p>
+      <p class="muted" style="font-size:15px">Recorded on an earlier version, so a few details differ from v20.</p>
+    </div>
+  </div>
+  <div class="stat" style="margin-top:20px">
+    <div class="num"><span class="from">-4.0 ns</span><span class="muted">→</span><span class="to">+0.27 ns</span></div>
+    <div><h3>Timing closure</h3><p>The design failed timing with a -4.0 ns setup violation. I pipelined the sound engine to break up the long path, and it now meets timing with +0.27 ns of slack.</p></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:40px">
+    <h3>On real hardware</h3>
+    <p>VGA output from an earlier version. Eye color and eyeball style come from his random genes, so each hatch looks different.</p>
+    <div class="gallery sq">
+      <figure><img src="assets/bk-idle.jpg" alt="Idle Blinkit with green tilted oval eyes"><figcaption>idle · green genes</figcaption></figure>
+      <figure><img src="assets/bk-angry.jpg" alt="Angry Blinkit with a V-shaped furrow"><figcaption>angry</figcaption></figure>
+      <figure><img src="assets/bk-white.jpg" alt="Blinkit with white eyeballs and yellow pupils"><figcaption>idle · white eyeballs</figcaption></figure>
+      <figure><img src="assets/bk-sleepy.jpg" alt="Sleepy Blinkit with half-closed eyes"><figcaption>sleepy</figcaption></figure>
+      <figure><img src="assets/bk-squint.jpg" alt="Blinkit with eyes squeezed shut"><figcaption>squeezed shut</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px">
+    <p class="kicker">PART 2 · in progress</p>
+    <h2>The ESP32 keychain</h2>
+    <p class="lead">Taking Blinkit off the dev board and into something you can carry: an ESP32-S3 with a 1.28" round touch screen, motion sensor, LiPo battery, speaker, and vibration motor, for about $80 in parts.</p>
+  </div>
+  <div class="boxes">
+    <div class="box"><h3>Designed in Face Lab</h3><p>A browser simulator I built to design the round-screen face before writing firmware, with 9 eye shapes, 7 pupils, mouths, and 12+ animated moods.</p></div>
+    <div class="box"><h3>Touch only</h3><p>Stroke to pet, tap to poke, hold for a round menu. A letter wheel handles naming on the round screen.</p></div>
+    <div class="box"><h3>Friends over Bluetooth</h3><p>Two Blinkits can bond with both owners' consent and hatch eggs that mix genes from each parent.</p></div>
+    <div class="box"><h3>Privacy built in</h3><p>A "keep to myself" mode turns Bluetooth off entirely.</p></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:40px;padding:28px;margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:8px">
+    <video src="assets/facelab-demo.mp4" poster="assets/facelab-demo-poster.jpg" controls playsinline muted preload="metadata" style="flex:0 1 360px;width:360px;max-width:100%;aspect-ratio:1/1;object-fit:cover"></video>
+    <div style="flex:999 1 320px;display:flex;flex-direction:column;gap:12px">
+      <p class="kicker">&gt; face_lab_demo.mp4 // 52 s</p>
+      <h3 style="font-size:22px">Face Lab in action</h3>
+      <p>The keychain's whole interface, designed and tested in my browser simulator before any firmware: moods, petting, the hold-to-open menu, and meeting other Blinkits.</p>
+    </div>
+  </div>
+  <div class="gallery sq" style="margin-top:20px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+    <figure><img src="assets/facelab-welcome.jpg" alt="Welcome screen: Hi, I'm Nub"><figcaption>first boot</figcaption></figure>
+    <figure><img src="assets/facelab-letter-wheel.jpg" alt="Letter wheel for typing a name on the round screen"><figcaption>letter wheel naming</figcaption></figure>
+    <figure><img src="assets/facelab-idle.jpg" alt="Idle face with big blue eyes"><figcaption>idle</figcaption></figure>
+    <figure><img src="assets/facelab-petted.jpg" alt="Happy face after being petted"><figcaption>petted</figcaption></figure>
+    <figure><img src="assets/facelab-menu.jpg" alt="Round menu with volume, mute, sleep, and friends buttons"><figcaption>hold-to-open menu</figcaption></figure>
+    <figure><img src="assets/facelab-group.jpg" alt="Group meetup with four Blinkits"><figcaption>Bluetooth meetup</figcaption></figure>
+    <figure><img src="assets/facelab-partner-baby.jpg" alt="Two partnered Blinkits with their baby"><figcaption>partners and a baby</figcaption></figure>
+    <figure><img src="assets/facelab-hatch-confetti.jpg" alt="A new Blinkit hatching with confetti"><figcaption>hatching</figcaption></figure>
+  </div>
+  <figure style="margin-top:20px"><img src="assets/face-lab.jpg" alt="The full Face Lab tool with the round preview and design controls" style="aspect-ratio:auto"><figcaption>The Face Lab tool: eye shapes, pupils, moods</figcaption></figure>
+  <div class="boxes" style="margin-top:20px">
+    <div class="box"><h3>Where it stands</h3><p>His brain runs on an ESP32 on a breadboard: moods, genes saved to flash, pet, poke, and play buttons, buzzer sounds, and his face on a 16x2 LCD while the round screen is on order.</p></div>
+    <div class="box"><h3>Next</h3><ol><li>Firmware on the round-screen board</li><li>Bluetooth meetups</li><li>3D-printed case</li><li>Custom PCB in KiCad</li></ol></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:40px;padding:28px;margin-top:20px;background:var(--panel);border:1px solid rgba(74,222,128,.5);border-radius:8px">
+    <video src="assets/esp32-breadboard.mp4" poster="assets/esp32-breadboard-poster.jpg" controls muted playsinline preload="metadata" style="flex:0 1 300px;width:300px;max-width:100%;aspect-ratio:9/16;object-fit:cover"></video>
+    <div style="flex:999 1 320px;display:flex;flex-direction:column;gap:12px">
+      <p class="kicker">&gt; esp32_breadboard.mp4 // 31 s</p>
+      <h3 style="font-size:22px">First firmware on real hardware</h3>
+      <p>The keychain's brain running on an ESP32: three buttons pet, poke, and play with him, a buzzer gives each mood its sound, and a 16x2 LCD shows his face and mood. Same mood rules as the FPGA version, now in C++.</p>
+    </div>
+  </div>
+  <div class="gallery" style="margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
+    <figure><img src="assets/esp32-breadboard-overview.jpg" alt="ESP32 breadboard prototype with buttons, buzzer, and LCD" style="object-position:center 60%"><figcaption>ESP32 breadboard prototype</figcaption></figure>
+    <figure><img src="assets/esp32-lcd-happy-closeup.jpg" alt="16x2 LCD showing Blinkit's happy face"><figcaption>His face on the 16x2 LCD</figcaption></figure>
+  </div>
+</section>
+
+<div class="pager">
+  <a href="index.html#projects">← All projects</a>
+  <a class="next" href="ngcp.html">Next: NGCP Ground Vehicle →</a>
+</div>
+</div>
+</body>
+</html>

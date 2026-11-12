@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Cat Robot | Rory Reardon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <div class="links">
+    <a href="index.html#projects">All projects</a>
+    <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
+  </div>
+</nav>
+<header class="phead">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><p class="kicker">// robotics · on-device ai</p><span class="tag">Just started</span></div>
+  <h1>AI Cat Robot</h1>
+  <p class="lead">A four-legged robot cat built by a team of 8. I'm on the software team, and I've been assigned to train and run the cat's on-device AI model for voice interaction on a Jetson Orin NX.</p>
+</header>
+
+<img class="heroimg" src="assets/aicat-whiteboard.jpg" alt="Team whiteboard planning the AI Cat: Jetson Orin brain, STM32 controlling 12 servos, IMU, camera, microphone, speaker, LiPo battery, and the behaviors users want" style="margin-bottom:36px;aspect-ratio:4/3;object-position:center 40%">
+
+<div class="facts" style="margin-top:0">
+  <div><span class="k">TEAM</span><span>Software, team of 8</span></div>
+  <div><span class="k">MY PART</span><span>On-device AI model for voice</span></div>
+  <div><span class="k">HARDWARE</span><span>Jetson Orin NX</span></div>
+  <div><span class="k">WHEN</span><span>October 2026 to present</span></div>
+</div>
+
+<section>
+  <div class="boxes">
+    <div class="box hl"><h3>My assignment</h3><p>Train and run a voice model that fits on the Jetson alongside everything else the cat needs to run, so it can respond to people without a cloud connection.</p></div>
+    <div class="box"><h3>Research so far</h3><p>Looking at how robot pets like Sony aibo and Anki Cozmo pick their behaviors, to help shape how the cat's personality works.</p></div>
+  </div>
+  <p class="muted" style="margin-top:24px">More here as the work happens.</p>
+</section>
+
+<section>
+  <h2 style="margin-bottom:14px">The plan</h2>
+  <p class="lead" style="margin-bottom:24px">From the team's planning board: a Jetson Orin "brain" handles thinking, personality, computer vision, audio processing, and ROS2, while an STM32 controls movement for 12 servos with an IMU. The camera, microphone, and speaker connect to the Jetson. The goals: meow, move on its own, respond to voice commands, come when called, and feel like a real animal for 15 to 30 minutes per charge.</p>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:40px;padding:28px;background:var(--panel);border:1px solid var(--line);border-radius:8px">
+    <video src="assets/aicat-prototype.mp4" poster="assets/aicat-poster.jpg" controls playsinline muted preload="metadata" style="flex:0 1 300px;width:300px;max-width:100%;aspect-ratio:9/16;object-fit:cover"></video>
+    <div style="flex:999 1 340px;display:flex;flex-direction:column;gap:12px">
+      <p class="kicker">&gt; previous_prototype.mp4 // 16 s</p>
+      <h3 style="font-size:22px">Where the team started</h3>
+      <p>The team's previous prototype walking on its 12 leg servos. This year's build adds the Jetson brain, camera, and voice, and my part, the voice model, runs on that Jetson.</p>
+    </div>
+  </div>
+</section>
+
+<div class="pager">
+  <a href="ugv.html">← Line-Following UGV</a>
+  <a class="next" href="index.html#projects">Back to all projects →</a>
+</div>
+</div>
+</body>
+</html>

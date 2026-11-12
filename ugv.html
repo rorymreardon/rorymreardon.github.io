@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Line-Following UGV | Rory Reardon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <div class="links">
+    <a href="index.html#projects">All projects</a>
+    <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
+  </div>
+</nav>
+<header class="phead">
+  <p class="kicker">// embedded firmware · mechanical design</p>
+  <h1>Line-Following UGV</h1>
+  <p class="lead">A small ground vehicle that follows a black line and stops for obstacles. Register-level C on a PIC18F46K22, three IR line sensors, an ultrasonic rangefinder, and a chassis I modeled and 3D printed myself.</p>
+</header>
+
+<img class="heroimg" src="assets/ugv-track.jpg" alt="The UGV on an oval black-line test track">
+
+<div class="facts">
+  <div><span class="k">MY ROLE</span><span>Firmware, all 3D modeling and printing</span></div>
+  <div><span class="k">MCU</span><span>PIC18F46K22 @ 16 MHz</span></div>
+  <div><span class="k">TOOLS</span><span>C (XC8), MPLAB X, Blender, PETG</span></div>
+  <div><span class="k">TEAM / WHEN</span><span>4 people · Spring 2026</span></div>
+</div>
+
+<figure style="margin:0 0 28px"><img src="assets/diagram-ugv_system_overview.png" alt="Block diagram: IR sensors feed a PIC18F46K22, which sends two PWM signals to a motor driver and two wheel motors" style="aspect-ratio:16/9;object-fit:contain;background:#0e1013"></figure>
+<div class="split" style="border-top:0;padding-top:0">
+  <h2>What I built</h2>
+  <div>
+    <p>The firmware sets up the chip at the register level: the internal 16 MHz oscillator, two hardware PWM channels for the wheel motors, GPIO for motor direction, and Timer1 as a 1 µs counter for the ultrasonic sensor.</p>
+    <p>Every 25 ms the main loop checks distance first. If anything is within 5 inches, the car stops. Otherwise it reads the three line sensors and picks a steering move.</p>
+    <p>I did all of the 3D work for the team: I modeled the chassis in Blender and printed it in PETG, with mounts for the board, motors, and sensors.</p>
+  </div>
+</div>
+
+<section>
+  <h2 style="margin-bottom:14px">Steering logic</h2>
+  <p class="lead" style="margin-bottom:22px">Each IR sensor reads 1 on black and 0 on white, and the 3-bit pattern decides how hard to turn. The car remembers which side it last saw the line on, so when it loses the line it turns back toward it instead of driving off.</p>
+  <div class="truth">
+    <div><span class="pat">0 1 0</span><span>Centered: straight</span></div>
+    <div><span class="pat">1 1 0 / 0 1 1</span><span>Drifting: slight turn</span></div>
+    <div><span class="pat">1 0 0 / 0 0 1</span><span>Way off: hard turn</span></div>
+    <div><span class="pat">1 1 1</span><span>Intersection: cross it</span></div>
+    <div><span class="pat">0 0 0</span><span>Lost: search toward last side seen</span></div>
+  </div>
+</section>
+
+<section>
+  <h2 style="margin-bottom:22px">Problems we hit</h2>
+  <div class="gallery" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));margin-bottom:20px">
+    <figure><img src="assets/diagram-ugv_pwm_tuning.png" alt="With the same PWM duty the wheel speeds differ; tuned per motor, they match" style="aspect-ratio:16/9;object-fit:contain;background:#0e1013"></figure>
+    <figure><img src="assets/diagram-ugv_ir_sensor_path.png" alt="Analog IR reads were unreliable; switching to digital reads fixed line detection" style="aspect-ratio:16/9;object-fit:contain;background:#0e1013"></figure>
+  </div>
+  <div class="boxes">
+    <div class="box"><h3>Motors that didn't match</h3><p>The two wheel motors drew different amounts of current, so the same PWM signal spun them at different speeds and the car drifted. I tuned a separate duty cycle for each motor until they matched.</p><pre>#define BASE_SPEED_LEFT   55
+#define BASE_SPEED_RIGHT  58</pre></div>
+    <div class="box"><h3>Unreliable IR sensors</h3><p>Reading the line sensors as analog values gave inconsistent results. We switched to reading them as digital inputs, which made line detection reliable.</p></div>
+    <div class="box"><h3>Obstacle stop</h3><p>The HC-SR04 gets a 10 µs trigger pulse, and Timer1 measures how long the echo stays high. Both waits have a timeout, so a missed echo can't freeze the car.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2 style="margin-bottom:22px">From render to print</h2>
+  <div class="gallery">
+    <figure><img src="assets/ugv-render-closed.jpg" alt="Blender render of the closed chassis"><figcaption>Blender render, lid closed</figcaption></figure>
+    <figure><img src="assets/ugv-render-open.jpg" alt="Blender render with the lid open"><figcaption>Lid open: board bay</figcaption></figure>
+    <figure><img src="assets/ugv-inside.jpg" alt="Inside the printed chassis: PIC board and wiring"><figcaption>Printed: PIC board and wiring</figcaption></figure>
+    <figure><img src="assets/ugv-ir.jpg" alt="IR line sensors mounted over the line"><figcaption>IR sensors over the line</figcaption></figure>
+  </div>
+  <div class="btns" style="margin-top:24px"><a class="btn ghost" href="https://github.com/rorymreardon/pic18f-line-following-ugv">View code on GitHub</a></div>
+</section>
+
+<div class="pager">
+  <a href="ngcp.html">← NGCP Ground Vehicle</a>
+  <a class="next" href="ai-cat.html">Next: AI Cat →</a>
+</div>
+</div>
+</body>
+</html>

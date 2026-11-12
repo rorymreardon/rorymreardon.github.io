@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGCP Ground Vehicle | Rory Reardon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <div class="links">
+    <a href="index.html#projects">All projects</a>
+    <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
+  </div>
+</nav>
+<header class="phead">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><p class="kicker">// electrical team · stm32 · altium</p><span class="tag">In progress</span></div>
+  <h1>NGCP Ground Vehicle</h1>
+  <p class="lead">I'm on the electrical team for the ERU, the unmanned ground vehicle in the 2026-27 Northrop Grumman Collaboration Project. This year I'm working with the payload team to add fire suppression to the vehicle's STM32 DAQ board.</p>
+</header>
+
+<div class="facts" style="margin-top:0">
+  <div><span class="k">TEAM</span><span>Electrical, ground vehicle</span></div>
+  <div><span class="k">MY PART</span><span>Fire suppression circuit on the DAQ shield</span></div>
+  <div><span class="k">TOOLS</span><span>STM32 Nucleo, Altium</span></div>
+  <div><span class="k">WHEN</span><span>September 2026 to present</span></div>
+</div>
+
+<section>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px"><h2>Fire suppression</h2><span class="tag">PCB target: end of November 2026</span></div>
+  <p class="lead" style="margin-bottom:24px">The ERU has to put out a simulated fire: cover more than half of a 1 ft by 1 ft target from within 10 ft, triggered by hand from the RC transmitter. Payload is building a small 5 V water pump system. I worked with them to decide which sensors it needs, and I'm designing the circuit that adds it to the existing DAQ board in Altium.</p>
+  <figure style="margin:0 0 28px"><img src="assets/diagram-ngcp_pump_driver.png" alt="Block diagram of the pump driver: fused 5 V input, AO3400A MOSFET, 5 V water pump, SSA34 flyback diode, gate pull-down, INA219 current monitor" style="aspect-ratio:16/9;object-fit:contain;background:#0e1013"></figure>
+<div class="boxes">
+    <div class="box"><h3>Pump driver</h3><p>An AO3400A logic-level MOSFET switches the pump, with an SSA34 flyback diode across the motor and a 10k pull-down on the gate so it can't turn on while the microcontroller boots.</p></div>
+    <div class="box"><h3>Fused 5 V input</h3><p>A 3 A resettable fuse and bulk capacitors (470 µF and 10 µF), so a jammed servo or a shorted pump can't take down the board or sag the supply.</p></div>
+    <div class="box"><h3>Aiming servos</h3><p>Headers for the servos that aim the nozzle, plus the RC trigger signal.</p></div>
+    <div class="box hl"><h3>Picking the sensors</h3><p>We kept what the operator needs: an INA219 for pump current and a pressure transducer to confirm water is actually moving. We cut flow, thermal, and distance sensing, since aiming is manual. I chose an INA219 in a larger package because the board is hand-soldered, and strapped it to I2C address 0x41 so it doesn't collide with the humidity sensor at 0x40.</p></div>
+  </div>
+  <div class="gallery" style="margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))">
+    <figure><img src="assets/ngcp-pump-driver.png" alt="Altium schematic of the pump driver: connector, SSA34 flyback diode, AO3400A MOSFET, gate resistor and pull-down" style="aspect-ratio:auto;object-fit:contain;background:#F4F1E6"><figcaption>Pump driver, my first schematic in Altium</figcaption></figure>
+    <figure><img src="assets/ngcp-5v-input.png" alt="Altium schematic of the fused 5 V input with a resettable fuse and capacitors" style="aspect-ratio:auto;object-fit:contain;background:#F4F1E6"><figcaption>Fused 5 V input</figcaption></figure>
+  </div>
+  <div class="steps" style="margin-top:22px">
+    <span class="done">architecture ✓</span><span class="muted">→</span><span class="done">sensors ✓</span><span class="muted">→</span><span class="now">schematic</span><span class="muted">→</span><span>review</span><span class="muted">→</span><span>layout</span><span class="muted">→</span><span>PCB ordered</span>
+  </div>
+</section>
+
+<section>
+  <h2 style="margin-bottom:16px">Learning the vehicle</h2>
+  <p class="lead" style="margin-bottom:24px">We inherited last year's boards with little documentation. I studied the schematics for the two STM32 shields, the backplane, the power board, and the motor driver, and documented how power and signals move through the vehicle.</p>
+  <div class="flow">
+    <div class="row">
+      <div class="n"><b>Ground station</b><span>off the vehicle, over radio</span></div>
+      <div class="n"><b>Jetson + Raspberry Pi</b><span>onboard computers</span></div>
+    </div>
+    <div class="arr">↕</div>
+    <div class="row">
+      <div class="n"><b>Control shield</b><span>motor PWM, encoders, ultrasonics, steering</span></div>
+      <div class="n"><b>DAQ shield</b><span>sensors, servos, battery data</span></div>
+      <div class="n g"><b>Fire suppression</b><span>new this year, on the DAQ shield</span></div>
+    </div>
+    <div class="arr">↕</div>
+    <div class="bus">Backplane bus · 14.8 V, 5 V, motor PWM, I2C</div>
+    <div class="arr">↕</div>
+    <div class="row">
+      <div class="n"><b>Motor driver</b><span>2 H-bridges</span></div>
+      <div class="n"><b>Power / BMS board</b><span>3 LiPo packs, fused outputs</span></div>
+    </div>
+  </div>
+  <p class="muted mono" style="font-size:12px;margin-top:10px">Simplified. Green marks the part I'm adding.</p>
+</section>
+
+<div class="pager">
+  <a href="blinkit.html">← Blinkit</a>
+  <a class="next" href="ugv.html">Next: Line-Following UGV →</a>
+</div>
+</div>
+</body>
+</html>

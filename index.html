@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rory Reardon | Computer Engineering</title>
+<meta name="description" content="Rory Reardon, Computer Engineering student at Cal Poly Pomona. Embedded systems, firmware, and FPGA projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <div class="links">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="text">
+    <p class="kicker">// computer engineering @ cal poly pomona</p>
+    <h1>Hi, I'm Rory.</h1>
+    <p class="lead">I write code that makes physical things move. I like microcontrollers, FPGAs, and building the parts myself with 3D modeling and printing. I'm looking for embedded, firmware, and hardware internships for summer 2027.</p>
+    <div class="btns">
+      <a class="btn primary" href="#projects">See my projects</a>
+      <a class="btn ghost" href="assets/Rory_Reardon_Resume.pdf">Resume (PDF)</a>
+    </div>
+  </div>
+  <img src="assets/rory.jpg" alt="Rory Reardon" onerror="this.remove()">
+</header>
+
+<section id="projects">
+  <div class="sec-head">
+    <h2>Projects</h2>
+    <p class="muted">Click a project for the full story</p>
+  </div>
+  <div class="grid">
+
+    <a class="card" href="blinkit.html">
+      <img src="assets/blinkit-setup.jpg" alt="Blinkit's face on a VGA monitor driven by a Nexys A7 FPGA board">
+      <div class="body">
+        <div class="top"><h3>Blinkit</h3><span class="tag">ESP32 version in progress</span></div>
+        <p>A digital pet with moods, sounds, and random genes. Built first in Verilog on an FPGA with no processor, now becoming an ESP32 keychain.</p>
+        <p class="stack">Verilog · VGA · SPI/I2C · timing closure · ESP32-S3</p>
+      </div>
+    </a>
+
+    <a class="card" href="ngcp.html">
+      <img src="assets/diagram-ngcp_pump_driver.png" alt="Block diagram of the NGCP fire suppression pump driver" style="object-fit:contain;background:#0e1013">
+      <div class="body">
+        <div class="top"><h3>NGCP Ground Vehicle</h3><span class="tag">In progress</span></div>
+        <p>Electrical team on the Northrop Grumman Collaboration Project. I'm designing the fire suppression circuit for the vehicle's STM32 DAQ board.</p>
+        <p class="stack">STM32 · Altium · schematic design</p>
+      </div>
+    </a>
+
+    <a class="card" href="ugv.html">
+      <img src="assets/ugv-track.jpg" alt="The line-following UGV on its oval test track">
+      <div class="body">
+        <div class="top"><h3>Line-Following UGV</h3><span class="tag grey">Spring 2026</span></div>
+        <p>A small vehicle that follows a line and stops for obstacles, running register-level C on a PIC18F46K22, with a chassis I modeled and 3D printed.</p>
+        <p class="stack">C · PIC18F46K22 · PWM · Blender · PETG</p>
+      </div>
+    </a>
+
+    <a class="card" href="ai-cat.html">
+      <img src="assets/aicat-whiteboard.jpg" alt="The AI Cat team's planning whiteboard">
+      <div class="body">
+        <div class="top"><h3>AI Cat Robot</h3><span class="tag">Just started</span></div>
+        <p>A four-legged robot cat built by a team of 8. I'm on the software team, assigned to the on-device AI model for voice interaction.</p>
+        <p class="stack">Jetson Orin NX · on-device AI</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section style="padding-bottom:64px">
+  <h2 style="margin-bottom:20px">2026 so far</h2>
+  <img src="assets/diagram-project_timeline.png" alt="2026 timeline: line-following UGV in spring, NGCP in September, Blinkit and AI Cat in October, Blinkit FPGA demo December 1" style="width:100%;border:1px solid var(--line);border-radius:8px">
+</section>
+
+<div class="split" id="about">
+  <h2>About</h2>
+  <div>
+    <p>I'm a Computer Engineering student at Cal Poly Pomona, graduating December 2027. Outside of class I'm on the NGCP electrical team, a member of SHPE, and I beta test a friend's apps. This semester I'm taking Fundamentals of Cybersecurity and Operating Systems for Embedded Apps.</p>
+    <p>What I enjoy most is the moment code makes something real move, light up, or react. That's why my projects keep ending up with a microcontroller or an FPGA in them.</p>
+    <div class="chips">
+      <span>C</span><span>C++</span><span>Verilog</span><span>Python</span><span>STM32</span><span>PIC18F</span><span>ESP32</span><span>FPGA</span><span>SPI / I2C / UART</span><span>Vivado</span><span>Altium</span><span>KiCad</span><span>Blender</span><span>3D printing</span>
+    </div>
+  </div>
+</div>
+
+<footer class="site" id="contact">
+  <div>
+    <h2 style="font-size:24px">Let's talk</h2>
+    <p class="muted">Open to summer 2027 internships.</p>
+  </div>
+  <div class="contact">
+    <a href="mailto:rorymreardon@gmail.com">rorymreardon@gmail.com</a>
+    <a href="https://github.com/rorymreardon">GitHub</a>
+    <a href="https://www.linkedin.com/in/rory-reardon-b424a934b/">LinkedIn</a>
+    <a href="assets/Rory_Reardon_Resume.pdf">Resume.pdf</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
