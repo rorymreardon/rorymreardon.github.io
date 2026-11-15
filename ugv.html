@@ -12,22 +12,22 @@
 <body>
 <div class="wrap">
 <nav>
-  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <a class="brand" href="index.html">RORY REARDON</a>
   <div class="links">
     <a href="index.html#projects">All projects</a>
     <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
   </div>
 </nav>
 <header class="phead">
-  <p class="kicker">// embedded firmware · mechanical design</p>
+  <p class="kicker">Embedded firmware · Mechanical design</p>
   <h1>Line-Following UGV</h1>
-  <p class="lead">A small ground vehicle that follows a black line and stops for obstacles. Register-level C on a PIC18F46K22, three IR line sensors, an ultrasonic rangefinder, and a chassis I modeled and 3D printed myself.</p>
+  <p class="lead">A little car that follows a black line and stops before it hits anything. It was for my microcontrollers class, on a team of four. I ended up doing the chassis, the wiring, and some of the code, written in C on a PIC18F.</p>
 </header>
 
 <img class="heroimg" src="assets/ugv-track.jpg" alt="The UGV on an oval black-line test track">
 
 <div class="facts">
-  <div><span class="k">MY ROLE</span><span>Firmware, all 3D modeling and printing</span></div>
+  <div><span class="k">MY ROLE</span><span>Chassis, wiring, and some of the firmware</span></div>
   <div><span class="k">MCU</span><span>PIC18F46K22 @ 16 MHz</span></div>
   <div><span class="k">TOOLS</span><span>C (XC8), MPLAB X, Blender, PETG</span></div>
   <div><span class="k">TEAM / WHEN</span><span>4 people · Spring 2026</span></div>
@@ -37,15 +37,14 @@
 <div class="split" style="border-top:0;padding-top:0">
   <h2>What I built</h2>
   <div>
-    <p>The firmware sets up the chip at the register level: the internal 16 MHz oscillator, two hardware PWM channels for the wheel motors, GPIO for motor direction, and Timer1 as a 1 µs counter for the ultrasonic sensor.</p>
-    <p>Every 25 ms the main loop checks distance first. If anything is within 5 inches, the car stops. Otherwise it reads the three line sensors and picks a steering move.</p>
-    <p>I did all of the 3D work for the team: I modeled the chassis in Blender and printed it in PETG, with mounts for the board, motors, and sensors.</p>
+    <p>I modeled the chassis in Blender and 3D printed it in PETG, with spots for the board, motors, and sensors.</p>
+    <p>On the code side, the car checks for obstacles first, and if something's within 5 inches it stops. Otherwise it reads the three line sensors and decides which way to steer.</p>
   </div>
 </div>
 
 <section>
   <h2 style="margin-bottom:14px">Steering logic</h2>
-  <p class="lead" style="margin-bottom:22px">Each IR sensor reads 1 on black and 0 on white, and the 3-bit pattern decides how hard to turn. The car remembers which side it last saw the line on, so when it loses the line it turns back toward it instead of driving off.</p>
+  <p class="lead" style="margin-bottom:22px">If the middle sensor sees the line, it goes straight. If a side sensor sees it, it turns back toward it, harder the further off it is. If it loses the line completely, it turns toward the side it last saw it on.</p>
   <div class="truth">
     <div><span class="pat">0 1 0</span><span>Centered: straight</span></div>
     <div><span class="pat">1 1 0 / 0 1 1</span><span>Drifting: slight turn</span></div>
@@ -62,10 +61,10 @@
     <figure><img src="assets/diagram-ugv_ir_sensor_path.png" alt="Analog IR reads were unreliable; switching to digital reads fixed line detection" style="aspect-ratio:16/9;object-fit:contain;background:#0e1013"></figure>
   </div>
   <div class="boxes">
-    <div class="box"><h3>Motors that didn't match</h3><p>The two wheel motors drew different amounts of current, so the same PWM signal spun them at different speeds and the car drifted. I tuned a separate duty cycle for each motor until they matched.</p><pre>#define BASE_SPEED_LEFT   55
+    <div class="box"><h3>Motors that didn't match</h3><p>The car kept drifting to one side. I thought it was my code at first, but the motors just weren't identical, so the same PWM spun them at different speeds. I gave each motor its own duty cycle, 55 and 58, and it drove straight.</p><pre>#define BASE_SPEED_LEFT   55
 #define BASE_SPEED_RIGHT  58</pre></div>
-    <div class="box"><h3>Unreliable IR sensors</h3><p>Reading the line sensors as analog values gave inconsistent results. We switched to reading them as digital inputs, which made line detection reliable.</p></div>
-    <div class="box"><h3>Obstacle stop</h3><p>The HC-SR04 gets a 10 µs trigger pulse, and Timer1 measures how long the echo stays high. Both waits have a timeout, so a missed echo can't freeze the car.</p></div>
+    <div class="box"><h3>IR sensors</h3><p>The sensors only read reliably about a quarter inch off the ground, and our breadboard setup was so bulky it dragged on the floor. I switched to a flat sensor board mounted under the chassis, and we changed from analog to digital reads so black and white were clear.</p></div>
+    <div class="box"><h3>Obstacle stop</h3><p>The ultrasonic sensor sends out a ping and times how long the echo takes to come back, kind of like echolocation. Under 5 inches, the car stops.</p></div>
   </div>
 </section>
 

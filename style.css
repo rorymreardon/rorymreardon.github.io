@@ -14,13 +14,13 @@ img{max-width:100%;display:block}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
 nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding:24px 0;border-bottom:1px solid var(--line)}
-nav .brand{font-family:var(--mono);font-size:15px;color:var(--text)}
+nav .brand{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.22em;color:var(--text)}
 nav .brand span{color:var(--green)}
 nav .links{display:flex;flex-wrap:wrap;gap:24px;font-size:15px}
 nav .links a{color:var(--body)}
 nav .links a.cta{color:var(--green);font-weight:600}
 
-.kicker{font-family:var(--mono);font-size:13px;color:var(--green);margin:0}
+.kicker{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0}
 h1{font-size:clamp(38px,6vw,60px);line-height:1.08;margin:0;font-weight:700;letter-spacing:-.02em}
 h2{font-size:28px;margin:0;font-weight:650;letter-spacing:-.01em}
 h3{font-size:18px;margin:0;font-weight:600}
@@ -109,3 +109,7 @@ pre{margin:0;padding:14px 16px;background:var(--bg);border:1px solid var(--line)
 .pager a.next{color:var(--green);font-weight:600}
 ol{margin:0;padding-left:20px;color:var(--body)}
 video{width:100%;border:1px solid var(--line);border-radius:8px;background:#000}
+
+/* show the whole video frame in fullscreen instead of cropping */
+video:fullscreen,video:-webkit-full-screen{object-fit:contain!important;aspect-ratio:auto!important;width:100%!important;height:100%!important;border:0}
+@media (max-width:640px){.kicker{letter-spacing:.12em}}

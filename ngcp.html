@@ -12,16 +12,16 @@
 <body>
 <div class="wrap">
 <nav>
-  <a class="brand" href="index.html"><span>rory@cpp</span>:~$</a>
+  <a class="brand" href="index.html">RORY REARDON</a>
   <div class="links">
     <a href="index.html#projects">All projects</a>
     <a class="cta" href="assets/Rory_Reardon_Resume.pdf">Resume</a>
   </div>
 </nav>
 <header class="phead">
-  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><p class="kicker">// electrical team · stm32 · altium</p><span class="tag">In progress</span></div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><p class="kicker">Electrical team · STM32 · Altium</p><span class="tag">In progress</span></div>
   <h1>NGCP Ground Vehicle</h1>
-  <p class="lead">I'm on the electrical team for the ERU, the unmanned ground vehicle in the 2026-27 Northrop Grumman Collaboration Project. This year I'm working with the payload team to add fire suppression to the vehicle's STM32 DAQ board.</p>
+  <p class="lead">I'm on the electrical team for the ERU, the ground vehicle in this year's Northrop Grumman Collaboration Project. Fire suppression is new this year, so I'm designing that circuit from scratch and working with the payload team to figure out what it needs.</p>
 </header>
 
 <div class="facts" style="margin-top:0">
@@ -33,16 +33,15 @@
 
 <section>
   <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px"><h2>Fire suppression</h2><span class="tag">PCB target: end of November 2026</span></div>
-  <p class="lead" style="margin-bottom:24px">The ERU has to put out a simulated fire: cover more than half of a 1 ft by 1 ft target from within 10 ft, triggered by hand from the RC transmitter. Payload is building a small 5 V water pump system. I worked with them to decide which sensors it needs, and I'm designing the circuit that adds it to the existing DAQ board in Altium.</p>
+  <p class="lead" style="margin-bottom:24px">The vehicle has to drive up to a simulated fire and put it out by spraying more than half of a 1 ft by 1 ft target from up to 10 ft away. We trigger it by hand from the remote. Payload is building a small 5 V water pump, and their design decides what sensors and parts I put on the board.</p>
   <figure style="margin:0 0 28px"><img src="assets/diagram-ngcp_pump_driver.png" alt="Block diagram of the pump driver: fused 5 V input, AO3400A MOSFET, 5 V water pump, SSA34 flyback diode, gate pull-down, INA219 current monitor" style="aspect-ratio:16/9;object-fit:contain;background:#0e1013"></figure>
 <div class="boxes">
-    <div class="box"><h3>Pump driver</h3><p>An AO3400A logic-level MOSFET switches the pump, with an SSA34 flyback diode across the motor and a 10k pull-down on the gate so it can't turn on while the microcontroller boots.</p></div>
-    <div class="box"><h3>Fused 5 V input</h3><p>A 3 A resettable fuse and bulk capacitors (470 µF and 10 µF), so a jammed servo or a shorted pump can't take down the board or sag the supply.</p></div>
-    <div class="box"><h3>Aiming servos</h3><p>Headers for the servos that aim the nozzle, plus the RC trigger signal.</p></div>
-    <div class="box hl"><h3>Picking the sensors</h3><p>We kept what the operator needs: an INA219 for pump current and a pressure transducer to confirm water is actually moving. We cut flow, thermal, and distance sensing, since aiming is manual. I chose an INA219 in a larger package because the board is hand-soldered, and strapped it to I2C address 0x41 so it doesn't collide with the humidity sensor at 0x40.</p></div>
+    <div class="box"><h3>Pump driver</h3><p>A MOSFET switches the pump on and off. A flyback diode protects it from voltage spikes when the pump shuts off, and a pull-down resistor keeps the pump from turning on by accident while the microcontroller boots.</p></div>
+    <div class="box"><h3>Fused 5 V input</h3><p>A resettable fuse and a couple of capacitors, so if the pump or a servo shorts out, it doesn't take the rest of the board down with it.</p></div>
+    <div class="box"><h3>Aiming servos</h3><p>Connectors for the servos that aim the nozzle, plus the trigger signal from the remote.</p></div>
   </div>
   <div class="gallery" style="margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))">
-    <figure><img src="assets/ngcp-pump-driver.png" alt="Altium schematic of the pump driver: connector, SSA34 flyback diode, AO3400A MOSFET, gate resistor and pull-down" style="aspect-ratio:auto;object-fit:contain;background:#F4F1E6"><figcaption>Pump driver, my first schematic in Altium</figcaption></figure>
+    <figure><img src="assets/ngcp-pump-driver.png" alt="Altium schematic of the pump driver: connector, SSA34 flyback diode, AO3400A MOSFET, gate resistor and pull-down" style="aspect-ratio:auto;object-fit:contain;background:#F4F1E6"><figcaption>My first schematic in Altium, the pump driver</figcaption></figure>
     <figure><img src="assets/ngcp-5v-input.png" alt="Altium schematic of the fused 5 V input with a resettable fuse and capacitors" style="aspect-ratio:auto;object-fit:contain;background:#F4F1E6"><figcaption>Fused 5 V input</figcaption></figure>
   </div>
   <div class="steps" style="margin-top:22px">
@@ -52,7 +51,7 @@
 
 <section>
   <h2 style="margin-bottom:16px">Learning the vehicle</h2>
-  <p class="lead" style="margin-bottom:24px">We inherited last year's boards with little documentation. I studied the schematics for the two STM32 shields, the backplane, the power board, and the motor driver, and documented how power and signals move through the vehicle.</p>
+  <p class="lead" style="margin-bottom:24px">Before designing anything, I went through last year's boards and traced how power and signals get around the vehicle, from the battery board through the backplane to the two STM32s. The block diagram below is what I came up with.</p>
   <div class="flow">
     <div class="row">
       <div class="n"><b>Ground station</b><span>off the vehicle, over radio</span></div>
