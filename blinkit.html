@@ -30,14 +30,14 @@
   <div><span class="k">PLATFORMS</span><span>Nexys A7-100T, ESP32-S3</span></div>
   <div><span class="k">LANGUAGES</span><span>Verilog, C++</span></div>
   <div><span class="k">TOOLS</span><span>Vivado, Arduino, browser tools I designed</span></div>
-  <div><span class="k">STATUS</span><span>FPGA v20 working, ESP32 version on a breadboard</span></div>
+  <div><span class="k">STATUS</span><span>FPGA version finished (Nov 2026), ESP32 version on a breadboard</span></div>
 </div>
 
 <section>
   <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px">
-    <p class="kicker">PART 1 · class final project · demo December 2026</p>
+    <p class="kicker">PART 1 · class final project · finished November 2026</p>
     <h2>The FPGA version</h2>
-    <p class="lead">Built in Verilog on a Nexys A7 board. There's no processor, so everything he does is hardware logic. He's on version 20.</p>
+    <p class="lead">Built in Verilog on a Nexys A7 board. There's no processor, so everything he does is hardware logic. Version 20 is the one I demoed for the class.</p>
   </div>
   <div class="boxes">
     <div class="box"><h3>Live face</h3><p>His face is drawn live on a VGA monitor. He blinks, looks around, and gets heart eyes, star eyes, or tears depending on his mood.</p></div>
@@ -48,27 +48,41 @@
     <div class="box"><h3>Mood display</h3><p>The board's 7-segment display spells out how he's feeling.</p></div>
   </div>
   <div style="display:flex;flex-wrap:wrap;align-items:center;gap:40px;padding:28px;margin-top:20px;background:var(--panel);border:1px solid rgba(74,222,128,.5);border-radius:8px">
-    <video src="assets/blinkit-fpga-demo.mp4" poster="assets/blinkit-fpga-demo-poster.jpg" controls muted playsinline preload="metadata" style="flex:0 1 320px;width:320px;max-width:100%;aspect-ratio:9/16;object-fit:cover"></video>
+    <video src="assets/blinkit-fpga-final-demo.mp4" poster="assets/blinkit-fpga-final-demo-poster.jpg" controls muted playsinline preload="metadata" style="flex:0 1 320px;width:320px;max-width:100%;aspect-ratio:9/16;object-fit:cover"></video>
     <div style="flex:999 1 320px;display:flex;flex-direction:column;gap:12px">
       <p class="kicker">Video · 40 sec</p>
       <h3 style="font-size:22px">See him react</h3>
-      <p>Pressing the board's buttons changes his mood on the monitor. Here he goes from idle to happy to angry after getting poked too many times.</p>
-      <p class="muted" style="font-size:15px">Recorded on an earlier version.</p>
+      <p>He hatches from his egg, then the board's buttons change his mood: happy, heart eyes, surprised, angry, and sad. At the end I press CPU RESET and a new one hatches with different colors. The 7-segment display spells out each mood.</p>
+      <p class="muted" style="font-size:15px">Final demo version.</p>
     </div>
   </div>
   <div class="stat" style="margin-top:20px">
     <div class="num"><span class="from">-4.0 ns</span><span class="muted">→</span><span class="to">+0.27 ns</span></div>
-    <div><h3>Timing closure</h3><p>The design was failing timing by 4 ns. I added a register to split up a long path in the sound engine, and now it passes with 0.27 ns to spare.</p></div>
+    <div><h3>Timing closure</h3><p>The design was failing timing by 4 ns. I added a register to split up a long path in the sound engine, and it passed with 0.27 ns to spare.</p></div>
   </div>
   <div style="display:flex;flex-direction:column;gap:14px;margin-top:40px">
     <h3>On real hardware</h3>
     <p>A few of his faces on a real monitor. His eye color is random every time he hatches.</p>
     <div class="gallery sq">
+      <figure><img src="assets/bk-egg-crack.jpg" alt="Speckled egg with a zig-zag crack across it"><figcaption>egg cracking</figcaption></figure>
       <figure><img src="assets/bk-idle.jpg" alt="Idle Blinkit with green tilted oval eyes"><figcaption>idle · green eyes</figcaption></figure>
+      <figure><img src="assets/bk-sunny.jpg" alt="Blinkit with yellow eyes and orange pupils"><figcaption>idle · sunny eyes</figcaption></figure>
+      <figure><img src="assets/bk-happy.jpg" alt="Happy Blinkit with curved crescent eyes"><figcaption>happy</figcaption></figure>
+      <figure><img src="assets/bk-hearts.jpg" alt="Blinkit with pink heart pupils"><figcaption>heart eyes</figcaption></figure>
+      <figure><img src="assets/bk-surprised.jpg" alt="Surprised Blinkit with wide eyes and tiny pupils"><figcaption>surprised</figcaption></figure>
       <figure><img src="assets/bk-angry.jpg" alt="Angry Blinkit with a V-shaped furrow"><figcaption>angry</figcaption></figure>
+      <figure><img src="assets/bk-sad.jpg" alt="Sad Blinkit with drooping eyes and a tear"><figcaption>sad · with a tear</figcaption></figure>
       <figure><img src="assets/bk-white.jpg" alt="Blinkit with white eyeballs and yellow pupils"><figcaption>idle · white eyeballs</figcaption></figure>
       <figure><img src="assets/bk-sleepy.jpg" alt="Sleepy Blinkit with half-closed eyes"><figcaption>sleepy</figcaption></figure>
       <figure><img src="assets/bk-squint.jpg" alt="Blinkit with eyes squeezed shut"><figcaption>squeezed shut</figcaption></figure>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:40px">
+    <h3>Checked in simulation</h3>
+    <p>Before the demo I wrote testbenches for the button debouncer and the mood state machine and ran them in Vivado. The debouncer ignores the bouncing and gives one clean press. The mood state machine goes through hatch, pet, angry, happy, and a debug mood exactly in order, with a sound trigger on every change.</p>
+    <div class="gallery" style="grid-template-columns:1fr">
+      <figure><img src="assets/blinkit-sim-debouncer.png" alt="Vivado waveform: a bouncing button input and one clean debounced press" style="aspect-ratio:auto"><figcaption>button debouncer testbench</figcaption></figure>
+      <figure><img src="assets/blinkit-sim-mood-fsm.png" alt="Vivado waveform of the mood state machine changing moods" style="aspect-ratio:auto"><figcaption>mood state machine testbench</figcaption></figure>
     </div>
   </div>
 </section>
